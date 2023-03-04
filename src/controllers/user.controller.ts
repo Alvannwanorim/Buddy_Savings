@@ -3,7 +3,9 @@ import { NextFunction, Request, response, Response } from "express"
 import UserService from "../services/userService"
 import { CreateUserDto } from "../dto/create-user.dto";
 import { LoginDto } from "../dto/login.dto";
-import { RequestWithUser } from "@/interfaces/request-with-user.interface";
+import { RequestWithUser } from "../interfaces/request-with-user.interface";
+import { request } from "http";
+import { HttpException } from "../exceptions/httpExceptions";
 
 
 
@@ -45,6 +47,28 @@ class UserController {
         next(err)
     }
         
+   }
+
+   public async findOne(request: Request, response: Response, next: NextFunction){
+        try {
+            if(!request.params.userId){
+                throw new HttpException(400,"Please provide the userId")
+            }
+            const user = await this.userService.findOne(request.params.userId as unknown as number)
+            response.status(200).json(user)
+        } catch (err) {
+            next(err)
+        }
+    }
+   
+   public async currentUser(request: RequestWithUser, response: Response, next: NextFunction){
+    try {
+        const user = request.user
+        delete user.password
+        response.status(200).json(user)
+    } catch (err) {
+        next(err)
+    }
    }
 
 

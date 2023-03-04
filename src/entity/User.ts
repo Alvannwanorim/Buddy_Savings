@@ -1,5 +1,5 @@
 import { User } from "../interfaces/user.interface"
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm"
 import { Roles } from "../enums/roles.enums"
 
 @Entity()
