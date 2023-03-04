@@ -7,10 +7,12 @@ import * as jwt from 'jsonwebtoken'
 import { LoginDto } from "../dto/login.dto";
 import { Payload } from "../interfaces/payload.interface";
 class UserService {
+   
 
     /**
-     * 
+     * Generate access token for a user
      * @param usersData 
+     * @returns `access_token`
      */
     public async login(usersData: LoginDto) {
         const user: UserEntity = await UserRepository.findByEmail(usersData.email);
@@ -27,14 +29,14 @@ class UserService {
             sub: user.id
         }
 
-        const token =  jwt.sign(payload, 'secret')
+        const token =  jwt.sign(payload, process.env.JWT_SECRET)
         return token
     }
 
     /**
-     * @description save or update user record to the database
+     * save or update user record to the database
      * @param usersData 
-     * @returns `UserEntity`
+     * @returns `User`
      */
     public async create(usersData: CreateUserDto) {
         const user = await UserRepository.findByEmail(usersData.email )
@@ -53,10 +55,20 @@ class UserService {
 
     /**
      * @description retrieves all user records from the database
-     * @returns `UserEntity`
+     * @returns `User[]`
      */
     public async findAll():Promise<UserEntity[]>{
         return await UserRepository.find({})
+    }
+
+    /**
+     * @description retrieves a single user records from the database
+     * @returns `User`
+     */
+    public async findOne(userId: number):Promise<UserEntity> {
+        const user =  await UserRepository.findById(userId);
+        if(!user) throw new HttpException(404,"User not found")
+        return user
     }
 }
 

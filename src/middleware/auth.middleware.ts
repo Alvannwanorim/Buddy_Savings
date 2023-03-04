@@ -8,7 +8,7 @@ const authMiddleware =async (req: RequestWithUser, res: Response, next: NextFunc
     try {
         if(req.headers.authorization && req.headers.authorization.split(' ')[0]==='Bearer'){
             const token = req.headers.authorization.split(' ')[1]
-            const decoded =  (jwt.verify(token, 'secret')) as unknown as Payload
+            const decoded =  (jwt.verify(token, process.env.JWT_SECRET )) as unknown as Payload
             const email = decoded.email
             const user = await UserRepository.findByEmail(email)
             if(user){

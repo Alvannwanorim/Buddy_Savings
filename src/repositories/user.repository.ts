@@ -7,4 +7,10 @@ export const UserRepository = AppDataSource.getRepository(UserEntity).extend({
             .where("user_entity.email = :email", { email })
             .getOne()
     },
+
+    findById(userId: number) {
+        return this.createQueryBuilder("user_entity")
+            .where("user_entity.id = :id", {id: userId })
+            .getOne()
+    },
 })
