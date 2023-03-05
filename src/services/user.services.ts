@@ -1,4 +1,4 @@
-import { UserEntity } from "../entity/User";
+import { UserEntity } from "../entity/user.entity";
 import { CreateUserDto } from "../dto/create-user.dto";
 import { HttpException } from "../exceptions/httpExceptions";
 import { UserRepository } from "../repositories/user.repository";

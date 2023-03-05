@@ -1,10 +1,9 @@
 
 import { NextFunction, Request, response, Response } from "express"
-import UserService from "../services/userService"
+import UserService from "../services/user.services"
 import { CreateUserDto } from "../dto/create-user.dto";
 import { LoginDto } from "../dto/login.dto";
 import { RequestWithUser } from "../interfaces/request-with-user.interface";
-import { request } from "http";
 import { HttpException } from "../exceptions/httpExceptions";
 
 
@@ -38,8 +37,6 @@ class UserController {
    }
    public async login(request: Request, response: Response, next: NextFunction){
     try {
-        console.log(request.headers);
-        
         const usersData : LoginDto = request.body
         const token = await this.userService.login(usersData)
         response.status(201).json({token})

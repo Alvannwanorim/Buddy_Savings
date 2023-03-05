@@ -1,6 +1,7 @@
+import { SavingPlanEntity } from "../entity/saving-plan.entity"
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import { UserEntity } from "../entity/User"
+import { UserEntity } from "../entity/user.entity"
 
 export const AppDataSource = new DataSource({
     type: "postgres",
@@ -11,7 +12,7 @@ export const AppDataSource = new DataSource({
     database: "buddy-saving",
     synchronize: true,
     logging: false,
-    entities: [UserEntity],
+    entities: [UserEntity, SavingPlanEntity],
     migrations: [],
     subscribers: [],
 })

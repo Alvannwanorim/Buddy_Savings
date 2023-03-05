@@ -1,5 +1,5 @@
 import { AppDataSource } from "../database"
-import { UserEntity } from "../entity/User"
+import { UserEntity } from "../entity/user.entity"
 
 export const UserRepository = AppDataSource.getRepository(UserEntity).extend({
     findByEmail(email: string) {

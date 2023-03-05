@@ -1,6 +1,7 @@
 import { User } from "../interfaces/user.interface"
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm"
 import { Roles } from "../enums/roles.enums"
+import { SavingPlanEntity } from "./saving-plan.entity";
 
 @Entity()
 export class UserEntity implements User {
@@ -22,9 +23,13 @@ export class UserEntity implements User {
 
     @Column({nullable: true})
     phoneNumber: string
+
     @Column({enum: Roles, default: Roles.USER
     })
     role: Roles;
+
+    @OneToMany(() => SavingPlanEntity, (savingPlan) => savingPlan.admin)
+    savingPlans: SavingPlanEntity[]
 
     @CreateDateColumn()
     createdAt: Date;
