@@ -1,8 +1,9 @@
 import { SavingFrequency } from "../enums/saving-frequency.enums";
 import { SavingMethod } from "../enums/saving-method.enum";
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import {  SavingPlan } from "../interfaces/saving-plan.interface";
 import { UserEntity } from "./user.entity";
+import { SavingsGroupEntity } from "./savings-group.entity";
 
 @Entity()
 export class SavingPlanEntity implements SavingPlan{
@@ -23,6 +24,9 @@ export class SavingPlanEntity implements SavingPlan{
     
     @ManyToOne(() => UserEntity, (user) => user.savingPlans)
     admin: UserEntity;
+
+    @OneToMany(() => SavingsGroupEntity, (group) => group.plan)
+    groupId: SavingsGroupEntity[]
 
     @Column({enum:SavingMethod, default:SavingMethod.AUTOMATIC})
     method: SavingMethod;

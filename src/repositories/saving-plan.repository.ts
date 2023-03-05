@@ -4,15 +4,19 @@ import { AppDataSource } from "../database"
 
 export const SavingPlanRepository = AppDataSource.getRepository(SavingPlanEntity).extend({
     findById(planId: number) {
-        return this.createQueryBuilder("saving_plan_entity")
-            .where("saving_plan_entity.id = :id", {id: planId })
-            .getOne()
+        const savingsPlan =  this.createQueryBuilder("saving_plan_entity")
+                        .leftJoinAndSelect("saving_plan_entity.admin", "user_entity") 
+                        .where("saving_plan_entity.id = :id", { id: planId }) 
+                        .getOne();
+        return savingsPlan
+        
     },
 
-    findGroupAdmin(planId: number) {
-        return this.createQueryBuilder("saving_plan_entity")
-            .relation(SavingPlanEntity,"admin")
-            .of({id:planId})
-            .loadMany()
-    },
+    findAllPlans(){
+        const savingsPlans =  this.createQueryBuilder("saving_plan_entity") 
+                        .leftJoinAndSelect("saving_plan_entity.admin", "user_entity") 
+                        .getMany();
+        return savingsPlans
+           
+    }
 })

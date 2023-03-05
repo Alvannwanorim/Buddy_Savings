@@ -14,7 +14,7 @@ class SavingPlanRoute implements Routes {
         this.initializeRoutes()
     }
     initializeRoutes() {
-        this.router.post(`${this.path}/create`, validationMiddleware(SavingPlanDto, 'body'),authMiddleware, this.savingPlanController.register.bind(this.savingPlanController) )
+        this.router.post(`${this.path}/create`, validationMiddleware(SavingPlanDto, 'body'),authMiddleware, this.savingPlanController.create.bind(this.savingPlanController) )
         this.router.get(`${this.path}/:planId`,authMiddleware, this.savingPlanController.findOne.bind(this.savingPlanController) )
         this.router.get(`${this.path}`,authMiddleware, this.savingPlanController.findAllSavingPlans.bind(this.savingPlanController) )
 

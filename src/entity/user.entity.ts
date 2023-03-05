@@ -2,6 +2,7 @@ import { User } from "../interfaces/user.interface"
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm"
 import { Roles } from "../enums/roles.enums"
 import { SavingPlanEntity } from "./saving-plan.entity";
+import { SavingsGroupEntity } from "./savings-group.entity";
 
 @Entity()
 export class UserEntity implements User {
@@ -30,6 +31,9 @@ export class UserEntity implements User {
 
     @OneToMany(() => SavingPlanEntity, (savingPlan) => savingPlan.admin)
     savingPlans: SavingPlanEntity[]
+
+    @OneToMany(() => SavingsGroupEntity, (savingGroup) => savingGroup.user)
+    group: SavingsGroupEntity[]
 
     @CreateDateColumn()
     createdAt: Date;
