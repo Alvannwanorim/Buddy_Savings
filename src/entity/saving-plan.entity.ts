@@ -26,7 +26,7 @@ export class SavingPlanEntity implements SavingPlan{
     admin: UserEntity;
 
     @OneToMany(() => SavingsGroupEntity, (group) => group.plan)
-    group: SavingsGroupEntity[]
+    groupId: SavingsGroupEntity[]
 
     @Column({enum:SavingMethod, default:SavingMethod.AUTOMATIC})
     method: SavingMethod;

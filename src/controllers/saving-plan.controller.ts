@@ -13,7 +13,7 @@ class SavingPlanController {
         response.status(201).json(SavingPlans)
     }
 
-   public async register(request: RequestWithUser, response: Response, next: NextFunction){
+   public async create(request: RequestWithUser, response: Response, next: NextFunction){
     try {
         const SavingPlansData : SavingPlanDto = request.body
         const createdSavingPlan = await this.SavingPlanService.create(SavingPlansData,request.user)

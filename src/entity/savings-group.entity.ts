@@ -1,14 +1,15 @@
 import { InviteStatus } from "../enums/invite-status.enum";
-import { Column, CreateDateColumn, ManyToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { SavingsGroup } from "../interfaces/saving-group.interface";
 import { SavingPlanEntity } from "./saving-plan.entity";
 import { UserEntity } from "./user.entity";
 
+@Entity()
 export class SavingsGroupEntity implements SavingsGroup{
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(() => SavingPlanEntity, (plan) => plan.group)
+    @ManyToOne(() => SavingPlanEntity, (plan) => plan.groupId)
     plan: SavingPlanEntity;
 
     @ManyToOne(() => UserEntity, (user) => user.group)

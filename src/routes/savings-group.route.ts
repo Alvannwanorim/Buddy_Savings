@@ -12,7 +12,7 @@ class SavingsGroupRoute implements Routes {
         this.initializeRoutes()
     }
     initializeRoutes() {
-        this.router.post(`${this.path}/add`,authMiddleware, this.savingsGroupController.register.bind(this.savingsGroupController) )
+        this.router.post(`${this.path}/add/:userId/:planId`,authMiddleware, this.savingsGroupController.create.bind(this.savingsGroupController) )
         this.router.get(`${this.path}/:groupId`,authMiddleware, this.savingsGroupController.findOne.bind(this.savingsGroupController) )
         this.router.get(`${this.path}`,authMiddleware, this.savingsGroupController.findAllSavingPlans.bind(this.savingsGroupController) )
 

@@ -16,7 +16,7 @@ class SavingsGroupController {
         }
     }
 
-   public async register(request: RequestWithUser, response: Response, next: NextFunction){
+   public async create(request: RequestWithUser, response: Response, next: NextFunction){
     try {
         const createdSavingPlan = await this.SavingsGroupService.create(
             request.params.planId as unknown as number,
@@ -32,10 +32,10 @@ class SavingsGroupController {
    public async findOne(request: RequestWithUser, response: Response, next: NextFunction){
         try {
             
-            if(!request.params.planId){
+            if(!request.params.groupId){
                 throw new HttpException(400,"Please provide the planId")
             }
-            const SavingPlan = await this.SavingsGroupService.findById(request.params.planId as unknown as number)
+            const SavingPlan = await this.SavingsGroupService.findById(request.params.groupId as unknown as number)
             response.status(200).json(SavingPlan)
         } catch (err) {
             next(err)
