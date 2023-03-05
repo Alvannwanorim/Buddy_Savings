@@ -19,5 +19,12 @@ export const SavingsGroupRepository = AppDataSource.getRepository(SavingsGroupEn
                         .getMany();
         return savingsGroups
            
+    },
+    findByIdAndUserId(planId: number, userId: number){
+        const savingsGroups =  this.createQueryBuilder("savings_group_entity")
+                                .where("savings_group_entity.planId = :planId AND savings_group_entity.user = :userId", { planId, userId })
+                                .getOne()
+
+        return savingsGroups;
     }
 })

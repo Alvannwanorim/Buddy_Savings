@@ -7,22 +7,22 @@ import SavingsGroupService from "../services/savings-group.service";
 class SavingsGroupController {
    public SavingsGroupService = new SavingsGroupService();
     
-    public async findAllSavingPlans(request: RequestWithUser, response: Response, next: NextFunction){
+    public async findAllSavingsGroup(request: RequestWithUser, response: Response, next: NextFunction){
         try {
-            const SavingPlans = await this.SavingsGroupService.findAll();
-            response.status(201).json(SavingPlans)
+            const SavingsGroup = await this.SavingsGroupService.findAll();
+            response.status(201).json(SavingsGroup)
         } catch (err) {
             next(err)
         }
     }
 
-   public async create(request: RequestWithUser, response: Response, next: NextFunction){
+   public async createGroup(request: RequestWithUser, response: Response, next: NextFunction){
     try {
-        const createdSavingPlan = await this.SavingsGroupService.create(
+        const createdSavingsGroup = await this.SavingsGroupService.create(
             request.params.planId as unknown as number,
             request.params.userId as unknown as number,
             )
-        response.status(201).json(createdSavingPlan)
+        response.status(201).json(createdSavingsGroup)
     } catch (err) {
         next(err)
     }
@@ -35,8 +35,27 @@ class SavingsGroupController {
             if(!request.params.groupId){
                 throw new HttpException(400,"Please provide the planId")
             }
-            const SavingPlan = await this.SavingsGroupService.findById(request.params.groupId as unknown as number)
-            response.status(200).json(SavingPlan)
+            const savingsGroup = await this.SavingsGroupService.findById(request.params.groupId as unknown as number)
+            response.status(200).json(savingsGroup)
+        } catch (err) {
+            next(err)
+        }
+    }
+   public async acceptorRejectInvite(request: RequestWithUser, response: Response, next: NextFunction){
+        try {
+            
+            if(!request.params.planId){
+                throw new HttpException(400,"Please provide the planId")
+            }
+            if(!request.query.status){
+                throw new HttpException(400,"Please a query params of status")
+            }
+            const savingsGroup = await this.SavingsGroupService.acceptorRejectInvite(
+                request.params.planId as unknown as number,
+                request.user.id,
+                request.query.status as unknown as string
+                )
+            response.status(200).json(savingsGroup)
         } catch (err) {
             next(err)
         }

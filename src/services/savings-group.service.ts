@@ -4,6 +4,8 @@ import { UserRepository } from "../repositories/user.repository";
 import { SavingPlanRepository } from "../repositories/saving-plan.repository";
 import { UserEntity } from "../entity/user.entity";
 import { SavingPlanEntity } from "../entity/saving-plan.entity";
+import { SavingsGroupEntity } from "../entity/savings-group.entity";
+import { InviteStatus } from "../enums/invite-status.enum";
 
 class SavingsGroupService {
   
@@ -14,19 +16,36 @@ class SavingsGroupService {
     const plan: SavingPlanEntity =await  SavingPlanRepository.findById(planId)
 
     if(!plan) throw new HttpException(404,"savings plan not found")
-    const savingPlan = await SavingsGroupRepository.save({user, plan});
-    return savingPlan;
+
+    const existingGroup = await SavingsGroupRepository.findByIdAndUserId(planId, userId)
+    const savingsGroup = await SavingsGroupRepository.save({user, plan});
+    return savingsGroup;
    }
 
    public async findById(groupId: number) {
-     const savingPlan = await SavingsGroupRepository.findById(groupId);
-     if(!savingPlan) throw new HttpException(404,"Saving group not found")
-     return savingPlan
+     const savingsGroup = await SavingsGroupRepository.findById(groupId);
+     if(!savingsGroup) throw new HttpException(404,"Saving group not found")
+     return savingsGroup
    }
 
    public async findAll() {
-     const savingPlans = await SavingsGroupRepository.findAllGroups()
-     return savingPlans
+     const savingsGroups = await SavingsGroupRepository.findAllGroups()
+     return savingsGroups
+   }
+
+   public async acceptorRejectInvite(planId: number, userId: number, status: string){
+    const savingsGroup: SavingsGroupEntity = await SavingsGroupRepository.findByIdAndUserId(planId, userId)
+ 
+    if(savingsGroup.inviteStatus===InviteStatus.ACCEPTED || savingsGroup.inviteStatus===InviteStatus.REJECTED) return savingsGroup
+    if(status.toUpperCase() ===InviteStatus.ACCEPTED){
+      
+      savingsGroup.inviteStatus = InviteStatus.ACCEPTED
+     
+    }else if (status.toUpperCase() ===InviteStatus.REJECTED){
+      savingsGroup.inviteStatus = InviteStatus.REJECTED
+    }
+    const updatedSavingsGroup = await SavingsGroupRepository.save(savingsGroup)
+    return updatedSavingsGroup
    }
 }
 
