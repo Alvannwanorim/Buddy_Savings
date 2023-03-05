@@ -1,5 +1,5 @@
-import { SavingFrequency } from "@/enums/saving-frequency.enums";
-import { SavingMethod } from "@/enums/saving-method.enum";
+import { SavingFrequency } from "../enums/saving-frequency.enums";
+import { SavingMethod } from "../enums/saving-method.enum";
 import { User } from "./user.interface";
 
 export interface SavingPlan {
