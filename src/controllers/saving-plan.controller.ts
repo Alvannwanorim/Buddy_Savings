@@ -9,8 +9,12 @@ class SavingPlanController {
    public SavingPlanService = new SavingPlanService();
     
     public async findAllSavingPlans(request: RequestWithUser, response: Response, next: NextFunction){
-        const SavingPlans = await this.SavingPlanService.findAll();
-        response.status(201).json(SavingPlans)
+        try {
+            const SavingPlans = await this.SavingPlanService.findAll();
+            response.status(201).json(SavingPlans)
+        } catch (err) {
+            next(err)
+        }
     }
 
    public async create(request: RequestWithUser, response: Response, next: NextFunction){

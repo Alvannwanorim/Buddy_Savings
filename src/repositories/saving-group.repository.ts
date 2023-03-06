@@ -26,5 +26,12 @@ export const SavingsGroupRepository = AppDataSource.getRepository(SavingsGroupEn
                                 .getOne()
 
         return savingsGroups;
+    },
+    getGroupCounts(planId: number){
+        const count =  this.createQueryBuilder("savings_group_entity")
+                                .where("savings_group_entity.planId = :planId", { planId })
+                                .getCount()
+
+        return count;
     }
 })
