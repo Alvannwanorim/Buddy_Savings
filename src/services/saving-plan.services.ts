@@ -16,12 +16,18 @@ class SavingPlanService {
    */
    public async create(savingPlanData: SavingPlanDto, user: User): Promise<SavingPlanEntity> {
       const existingPlan = await SavingPlanRepository.findByTitle(savingPlanData.title)
+      
       if(existingPlan){
-        throw new HttpException(400,"Saving Plan with title already exists")
+        throw new HttpException(400,"Saving Plan with the title already exists")
       }
-      const savingPlan = await SavingPlanRepository.save({admin: user,...savingPlanData});
-      await SavingsGroupRepository.save({user, savingPlan, isAdmin:true, inviteStatus: InviteStatus.ACCEPTED})
-      return savingPlan;
+      const savingPlan: SavingPlanEntity= await SavingPlanRepository.save({admin: user,...savingPlanData});
+
+      if(savingPlan && savingPlan.id){
+        await SavingsGroupRepository.save({user, plan:savingPlan, isAdmin:true, inviteStatus: InviteStatus.ACCEPTED})
+        return savingPlan;
+      }
+      throw new HttpException(400,"Error creating saving plan")
+      
    }
 
    /**

@@ -66,6 +66,15 @@ class SavingsGroupService {
      return savingsGroups
    }
    /**
+    * Retrieves all `SavingsGroup` from the database
+    * @param planId
+    * @returns `SavingsGroupEntity[]`
+    */
+   public async findAllByPlan(planId:number): Promise<SavingsGroupEntity[]>{
+     const savingsGroups = await SavingsGroupRepository.findByPlan(planId)
+     return savingsGroups
+   }
+   /**
     * Update the status of user `SavingsGroup` invite
     * @param planId of an existing `SavingPlan`
     * @param userId of a `User`

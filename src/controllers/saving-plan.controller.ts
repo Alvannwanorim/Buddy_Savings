@@ -7,15 +7,6 @@ import { HttpException } from "../exceptions/httpExceptions";
 
 class SavingPlanController {
    public SavingPlanService = new SavingPlanService();
-    
-    public async findAllSavingPlans(request: RequestWithUser, response: Response, next: NextFunction){
-        try {
-            const SavingPlans = await this.SavingPlanService.findAll();
-            response.status(201).json(SavingPlans)
-        } catch (err) {
-            next(err)
-        }
-    }
 
    public async create(request: RequestWithUser, response: Response, next: NextFunction){
     try {
@@ -40,6 +31,16 @@ class SavingPlanController {
             next(err)
         }
     }
+
+    public async findAllSavingPlans(request: RequestWithUser, response: Response, next: NextFunction){
+        try {
+            const SavingPlans = await this.SavingPlanService.findAll();
+            response.status(201).json(SavingPlans)
+        } catch (err) {
+            next(err)
+        }
+    }
+
 
 }
 export default SavingPlanController

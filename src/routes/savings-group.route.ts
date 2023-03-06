@@ -17,6 +17,7 @@ class SavingsGroupRoute implements Routes {
         this.router.get(`${this.path}/:groupId`,authMiddleware, this.savingsGroupController.findOne.bind(this.savingsGroupController) )
         this.router.get(`${this.path}`,authMiddleware, this.savingsGroupController.findAllSavingsGroup.bind(this.savingsGroupController) )
         this.router.get(`${this.path}/invite/:planId`,authMiddleware, this.savingsGroupController.acceptorRejectInvite.bind(this.savingsGroupController) )
+        this.router.get(`${this.path}/plan/:planId`,authMiddleware, this.savingsGroupController.findAllByPlan.bind(this.savingsGroupController) )
 
     }
 }
