@@ -18,6 +18,8 @@ This section provides a brief over view of the endpoints. For complete informati
 
 ### **User Endpoints**
 
+This is used to store users information in the database
+
 | Title            | Description       | Endpoint | Input    |Authorization  |
 | :---             |    :----:           |    :----: |    :----:        |          ---: |
 | Register         | Create a new user record| ```POST: /api/user/register``` | ```body: CreateUserDto``` | none |
@@ -28,6 +30,8 @@ This section provides a brief over view of the endpoints. For complete informati
 ***
 
 #### **Savings Plan Endpoints**
+
+This is used to create savings plan that users can join
 
 | Title            | Description       | Endpoint | Input    |Authorization  |
 | :---             |    :----:           |    :----: |    :----:        |          ---: |
