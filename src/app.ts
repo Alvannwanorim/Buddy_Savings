@@ -23,10 +23,10 @@ class App {
 
     public listen(){
         this.app.listen(this.port, ()=>{
-            console.info(`==================================`)
-            console.info(`======== ENV: ${this.port}========`)
+            console.info(`============================`)
+            console.info(`======== ENV: ${this.port} =========`)
             console.info(`App listening on port ${this.port}`)
-            console.info(`==================================`)
+            console.info(`============================`)
         })
     }
 

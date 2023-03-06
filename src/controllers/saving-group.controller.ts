@@ -7,14 +7,7 @@ import SavingsGroupService from "../services/savings-group.service";
 class SavingsGroupController {
    public SavingsGroupService = new SavingsGroupService();
     
-    public async findAllSavingsGroup(request: RequestWithUser, response: Response, next: NextFunction){
-        try {
-            const SavingsGroup = await this.SavingsGroupService.findAll();
-            response.status(201).json(SavingsGroup)
-        } catch (err) {
-            next(err)
-        }
-    }
+    
 
    public async createGroup(request: RequestWithUser, response: Response, next: NextFunction){
     try {
@@ -61,5 +54,22 @@ class SavingsGroupController {
         }
     }
 
+    public async findAllSavingsGroup(request: RequestWithUser, response: Response, next: NextFunction){
+        try {
+            const SavingsGroup = await this.SavingsGroupService.findAll();
+            response.status(201).json(SavingsGroup)
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    public async findAllByPlan(request: RequestWithUser, response: Response, next: NextFunction){
+        try {
+            const SavingsGroup = await this.SavingsGroupService.findAllByPlan(request.params.planId as unknown as number,);
+            response.status(201).json(SavingsGroup)
+        } catch (err) {
+            next(err)
+        }
+    }
 }
 export default SavingsGroupController

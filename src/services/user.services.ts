@@ -29,7 +29,7 @@ class UserService {
             sub: user.id
         }
 
-        const token =  jwt.sign(payload, process.env.JWT_SECRET)
+        const token =  jwt.sign(payload, process.env.JWT_SECRET,{expiresIn:'1h'})
         return token
     }
 

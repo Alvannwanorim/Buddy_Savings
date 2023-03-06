@@ -11,6 +11,13 @@ export const SavingPlanRepository = AppDataSource.getRepository(SavingPlanEntity
         return savingsPlan
         
     },
+    findByTitle(title: string) {
+        const savingsPlan =  this.createQueryBuilder("saving_plan_entity")
+                        .where("saving_plan_entity.title = :title", { title})
+                        .getOne()
+        return savingsPlan
+        
+    },
 
     findAllPlans(){
         const savingsPlans =  this.createQueryBuilder("saving_plan_entity") 

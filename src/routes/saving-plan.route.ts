@@ -4,6 +4,7 @@ import { Routes } from "../interfaces/routes.interface";
 import authMiddleware from "../middleware/auth.middleware";
 import SavingPlanController from "../controllers/saving-plan.controller";
 import { SavingPlanDto } from "../dto/saving-plan.dto";
+import adminMiddleware from "../middleware/admin.middleware";
 
 class SavingPlanRoute implements Routes {
     public path = '/saving-plan';
@@ -14,7 +15,7 @@ class SavingPlanRoute implements Routes {
         this.initializeRoutes()
     }
     initializeRoutes() {
-        this.router.post(`${this.path}/create`, validationMiddleware(SavingPlanDto, 'body'),authMiddleware, this.savingPlanController.create.bind(this.savingPlanController) )
+        this.router.post(`${this.path}/create`, validationMiddleware(SavingPlanDto, 'body'),authMiddleware,adminMiddleware, this.savingPlanController.create.bind(this.savingPlanController) )
         this.router.get(`${this.path}/:planId`,authMiddleware, this.savingPlanController.findOne.bind(this.savingPlanController) )
         this.router.get(`${this.path}`,authMiddleware, this.savingPlanController.findAllSavingPlans.bind(this.savingPlanController) )
 
